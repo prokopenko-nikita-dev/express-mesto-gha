@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 const {
@@ -7,7 +8,7 @@ const {
   findUserById,
   updateUserInfo,
   updateUserAvatar,
-} = require('../controllers/users.js');
+} = require('../controllers/users');
 
 router.get('/', createUser);
 router.get('/me', getUsers);

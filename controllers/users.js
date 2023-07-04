@@ -1,4 +1,4 @@
-const User = require('../models/user.js');
+const User = require('../models/user');
 const NotFoundError = require('../errors/notFoundError');
 
 const createUser = (req, res) => {
@@ -12,7 +12,7 @@ const createUser = (req, res) => {
     });
 };
 
-const getUsers = (req, res, next) => {
+const getUsers = (req, res) => {
   User.findById(req.user._id)
     .orFail(() => {
       throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
@@ -20,10 +20,10 @@ const getUsers = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((error) => console.log(error))
+    .catch((error) => console.log(error));
 };
 
-const findUserById = (req, res, next) => {
+const findUserById = (req, res) => {
   User.findById(req.params.userId)
     .orFail(() => {
       throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
@@ -31,10 +31,10 @@ const findUserById = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((error) => console.log(error))
+    .catch((error) => console.log(error));
 };
 
-const updateUserInfo = (req, res, next) => {
+const updateUserInfo = (req, res) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
@@ -50,10 +50,10 @@ const updateUserInfo = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((error) => console.log(error))
+    .catch((error) => console.log(error));
 };
 
-const updateUserAvatar = (req, res, next) => {
+const updateUserAvatar = (req, res) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
@@ -69,7 +69,7 @@ const updateUserAvatar = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((error) => console.log(error))
+    .catch((error) => console.log(error));
 };
 
 module.exports = {
