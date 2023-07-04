@@ -20,9 +20,7 @@ const getUsers = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((err) => {
-      customError(err, req, res, next);
-    });
+    .catch((error) => console.log(error))
 };
 
 const findUserById = (req, res, next) => {
@@ -33,9 +31,7 @@ const findUserById = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((err) => {
-      customError(err, req, res, next);
-    });
+    .catch((error) => console.log(error))
 };
 
 const updateUserInfo = (req, res, next) => {
@@ -54,9 +50,7 @@ const updateUserInfo = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((err) => {
-      customError(err, req, res, next);
-    });
+    .catch((error) => console.log(error))
 };
 
 const updateUserAvatar = (req, res, next) => {
@@ -75,9 +69,7 @@ const updateUserAvatar = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((err) => {
-      customError(err, req, res, next);
-    });
+    .catch((error) => console.log(error))
 };
 
 module.exports = {

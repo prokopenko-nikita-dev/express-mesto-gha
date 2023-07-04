@@ -19,7 +19,7 @@ app.use('/*', () => {
 });
 app.use((req, res, next) => {
   req.user = {
-    _id: '64a3065b2a3e6673e24b4cb3'
+    _id: '64a3065b2a3e6673e24b4cb3',
   };
   next();
 });

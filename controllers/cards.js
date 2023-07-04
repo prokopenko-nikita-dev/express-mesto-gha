@@ -1,4 +1,3 @@
-
 const Card = require('../models/card');
 const NotFoundError = require('../errors/notFoundError');
 
@@ -8,9 +7,7 @@ const createCard = (req, res, next) => {
     .then((card) => {
       res.send(card);
     })
-    .catch((err) => {
-      customError(err, req, res, next);
-    });
+    .catch((error) => console.log(error))
 };
 
 const findCards = (req, res, next) => {
@@ -18,9 +15,7 @@ const findCards = (req, res, next) => {
     .then((cards) => {
       res.send(cards);
     })
-    .catch((err) => {
-      customError(err, req, res, next);
-    });
+    .catch((error) => console.log(error))
 };
 
 const deleteCard = (req, res, next) => {
@@ -40,9 +35,7 @@ const deleteCard = (req, res, next) => {
     .then((cardForDeleting) => {
       res.send(cardForDeleting);
     })
-    .catch((err) => {
-      customError(err, req, res, next);
-    });
+    .catch((error) => console.log(error))
 };
 
 const likeCard = (req, res, next) => {
@@ -57,9 +50,7 @@ const likeCard = (req, res, next) => {
     .then((card) => {
       res.send(card);
     })
-    .catch((err) => {
-      customError(err, req, res, next);
-    });
+    .catch((error) => console.log(error))
 };
 
 const dislikeCard = (req, res, next) => {
@@ -74,9 +65,7 @@ const dislikeCard = (req, res, next) => {
     .then((card) => {
       res.send(card);
     })
-    .catch((err) => {
-      customError(err, req, res, next);
-    });
+    .catch((error) => console.log(error))
 };
 
 module.exports = {
