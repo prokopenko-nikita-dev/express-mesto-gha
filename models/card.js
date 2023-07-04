@@ -3,9 +3,8 @@ const mongoose = require('mongoose');
 const cardSchema = new mongoose.Schema({
   name: {
     type: String,
-    // require: true,
     minlength: 2,
-    maxlenght: 30
+    maxlength: 30,
   },
   link: {
     type: String,
@@ -29,6 +28,6 @@ const cardSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-})
+});
 
 module.exports = mongoose.model('card', cardSchema);

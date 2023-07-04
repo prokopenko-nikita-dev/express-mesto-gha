@@ -2,17 +2,15 @@ const User = require('../models/user.js');
 const NotFoundError = require('../errors/notFoundError');
 
 const createUser = (req, res) => {
-
   const { name, about, email } = req.body;
-
   User.create({ name, about, email })
     .then((user) => {
-      res.send(user)
+      res.send(user);
     })
     .catch((error) => {
       res.status(400).send(error);
-    })
-}
+    });
+};
 
 const getUsers = (req, res, next) => {
   User.findById(req.user._id)
@@ -87,5 +85,5 @@ module.exports = {
   getUsers,
   findUserById,
   updateUserInfo,
-  updateUserAvatar
-}
+  updateUserAvatar,
+};
