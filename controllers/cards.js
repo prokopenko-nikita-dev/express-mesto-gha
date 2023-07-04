@@ -48,12 +48,12 @@ const deleteCard = (req, res, next) => {
 const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
-    { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
+    { $addToSet: { likes: req.user._id } },
     { new: true },
   )
-  .orFail(() => {
-    throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
-  })
+    .orFail(() => {
+      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
+    })
     .then((card) => {
       res.send(card);
     })
@@ -65,12 +65,12 @@ const likeCard = (req, res, next) => {
 const dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
-    { $pull: { likes: req.user._id } }, // убрать _id из массива
+    { $pull: { likes: req.user._id } },
     { new: true },
   )
-  .orFail(() => {
-    throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
-  })
+    .orFail(() => {
+      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
+    })
     .then((card) => {
       res.send(card);
     })
@@ -82,18 +82,18 @@ const dislikeCard = (req, res, next) => {
 
 
 module.exports.createCard = (req, res) => {
-  console.log(req.user._id); // _id станет доступен
+  console.log(req.user._id);
 };
 
 module.exports.likeCard = (req, res) => Card.findByIdAndUpdate(
   req.params.cardId,
-  { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
+  { $addToSet: { likes: req.user._id } },
   { new: true },
 )
 
 module.exports.dislikeCard = (req, res) => Card.findByIdAndUpdate(
   req.params.cardId,
-  { $pull: { likes: req.user._id } }, // убрать _id из массива
+  { $pull: { likes: req.user._id } },
   { new: true },
 )
 

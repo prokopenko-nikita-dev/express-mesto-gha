@@ -14,7 +14,7 @@ const createUser = (req, res) => {
     })
 }
 
-const getUsers  = (req, res, next) => {
+const getUsers = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(() => {
       throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
@@ -29,9 +29,9 @@ const getUsers  = (req, res, next) => {
 
 const findUserById = (req, res, next) => {
   User.findById(req.params.userId)
-  .orFail(() => {
-    throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
-  })
+    .orFail(() => {
+      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
+    })
     .then((user) => {
       res.send(user);
     })
@@ -46,13 +46,13 @@ const updateUserInfo = (req, res, next) => {
     req.user._id,
     { name, about },
     {
-      new: true, // обработчик then получит на вход обновлённую запись
-      runValidators: true, // данные будут валидированы перед изменением
+      new: true,
+      runValidators: true,
     },
   )
-  .orFail(() => {
-    throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
-  })
+    .orFail(() => {
+      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
+    })
     .then((user) => {
       res.send(user);
     })
@@ -67,13 +67,13 @@ const updateUserAvatar = (req, res, next) => {
     req.user._id,
     { avatar },
     {
-      new: true, // обработчик then получит на вход обновлённую запись
-      runValidators: true, // данные будут валидированы перед изменением
+      new: true,
+      runValidators: true,
     },
   )
-  .orFail(() => {
-    throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
-  })
+    .orFail(() => {
+      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
+    })
     .then((user) => {
       res.send(user);
     })
