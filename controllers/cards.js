@@ -1,6 +1,6 @@
 const Card = require('../models/card');
-const NotFoundError = require('../errors/notFoundError');
-const { customError } = require('../errors/customErrors');
+const notFoundError = require('../errors/notFoundError');
+const { customError } = require('../errors/customError');
 
 const createCard = (req, res) => {
   const { name, link } = req.body;
@@ -9,7 +9,7 @@ const createCard = (req, res) => {
       res.send(card);
     })
     .catch((err) => {
-      customError(err, req, res, next);
+      customError(err, req, res);
     });
 };
 
@@ -19,20 +19,20 @@ const findCards = (res) => {
       res.send(cards);
     })
     .catch((err) => {
-      customError(err, req, res, next);
+      customError(err, req, res);
     });
 };
 
 const deleteCard = (req, res) => {
   Card.findById(req.params.cardId)
     .orFail(() => {
-      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
+      throw new notFoundError('Запрашиваемые данные по указанному id не найдены');
     })
     .then((cardForDeleting) => {
       res.send(cardForDeleting);
     })
     .catch((err) => {
-      customError(err, req, res, next);
+      customError(err, req, res);
     });
 };
 
@@ -43,13 +43,13 @@ const likeCard = (req, res) => {
     { new: true },
   )
     .orFail(() => {
-      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
+      throw new notFoundError('Запрашиваемые данные по указанному id не найдены');
     })
     .then((card) => {
       res.send(card);
     })
     .catch((err) => {
-      customError(err, req, res, next);
+      customError(err, req, res);
     });
 };
 
@@ -60,13 +60,13 @@ const dislikeCard = (req, res) => {
     { new: true },
   )
     .orFail(() => {
-      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
+      throw new notFoundError('Запрашиваемые данные по указанному id не найдены');
     })
     .then((card) => {
       res.send(card);
     })
-    .catch((error) => {
-      customError(err, req, res, next);
+    .catch((err) => {
+      customError(err, req, res);
     });
 };
 

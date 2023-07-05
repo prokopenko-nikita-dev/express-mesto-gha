@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
-const users = require('./routes/users');
 const NotFoundError = require('./errors/notFoundError');
 const users = require('./routes/users');
 const cards = require('./routes/cards');

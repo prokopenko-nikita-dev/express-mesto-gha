@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const NotFoundError = require('../errors/notFoundError');
-const { customError } = require('../errors/customErrors');
+const { customError } = require('../errors/customError');
 
 const createUser = (req, res) => {
   const { name, about, email } = req.body;
@@ -9,7 +9,7 @@ const createUser = (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      customError(err, req, res, next);
+      customError(err, req, res);
     });
 };
 
@@ -22,7 +22,7 @@ const getUsers = (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      customError(err, req, res, next);
+      customError(err, req, res);
     });
 };
 
@@ -35,7 +35,7 @@ const findUserById = (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      customError(err, req, res, next);
+      customError(err, req, res);
     });
 };
 
@@ -56,7 +56,7 @@ const updateUserInfo = (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      customError(err, req, res, next);
+      customError(err, req, res);
     });
 };
 
@@ -77,7 +77,7 @@ const updateUserAvatar = (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      customError(err, req, res, next);
+      customError(err, req, res);
     });
 };
 
