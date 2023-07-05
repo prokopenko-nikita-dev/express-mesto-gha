@@ -4,14 +4,13 @@ const mongoose = require('mongoose');
 
 const app = express();
 const users = require('./routes/users');
-const cards = require('./routes/cards');
 const NotFoundError = require('./errors/notFoundError');
-const usersRouter = require('./routes/users');
+const users = require('./routes/users');
+const cards = require('./routes/cards');
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(bodyParser.json());
-app.use('/users', usersRouter);
 app.use('/users', users);
 app.use('/cards', cards);
 app.use('/*', () => {

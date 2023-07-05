@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const NotFoundError = require('../errors/notFoundError');
+const { customError } = require('../errors/customErrors');
 
 const createUser = (req, res) => {
   const { name, about, email } = req.body;
@@ -7,8 +8,8 @@ const createUser = (req, res) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((error) => {
-      res.status(400).send(error);
+    .catch((err) => {
+      customError(err, req, res, next);
     });
 };
 
@@ -20,7 +21,9 @@ const getUsers = (req, res) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      customError(err, req, res, next);
+    });
 };
 
 const findUserById = (req, res) => {
@@ -31,7 +34,9 @@ const findUserById = (req, res) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      customError(err, req, res, next);
+    });
 };
 
 const updateUserInfo = (req, res) => {
@@ -50,7 +55,9 @@ const updateUserInfo = (req, res) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      customError(err, req, res, next);
+    });
 };
 
 const updateUserAvatar = (req, res) => {
@@ -69,7 +76,9 @@ const updateUserAvatar = (req, res) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      customError(err, req, res, next);
+    });
 };
 
 module.exports = {

@@ -1,5 +1,6 @@
 const Card = require('../models/card');
 const NotFoundError = require('../errors/notFoundError');
+const { customError } = require('../errors/customErrors');
 
 const createCard = (req, res) => {
   const { name, link } = req.body;
@@ -7,7 +8,9 @@ const createCard = (req, res) => {
     .then((card) => {
       res.send(card);
     })
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      customError(err, req, res, next);
+    });
 };
 
 const findCards = (res) => {
@@ -15,7 +18,9 @@ const findCards = (res) => {
     .then((cards) => {
       res.send(cards);
     })
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      customError(err, req, res, next);
+    });
 };
 
 const deleteCard = (req, res) => {
@@ -26,7 +31,9 @@ const deleteCard = (req, res) => {
     .then((cardForDeleting) => {
       res.send(cardForDeleting);
     })
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      customError(err, req, res, next);
+    });
 };
 
 const likeCard = (req, res) => {
@@ -41,7 +48,9 @@ const likeCard = (req, res) => {
     .then((card) => {
       res.send(card);
     })
-    .catch((error) => console.log(error));
+    .catch((err) => {
+      customError(err, req, res, next);
+    });
 };
 
 const dislikeCard = (req, res) => {
@@ -56,7 +65,9 @@ const dislikeCard = (req, res) => {
     .then((card) => {
       res.send(card);
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      customError(err, req, res, next);
+    });
 };
 
 module.exports = {
