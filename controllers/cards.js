@@ -1,5 +1,5 @@
 const Card = require('../models/card');
-const notFoundError = require('../errors/notFoundError');
+const NotFoundError = require('../errors/notFoundError');
 const { customError } = require('../errors/customError');
 
 const createCard = (req, res) => {
@@ -13,7 +13,7 @@ const createCard = (req, res) => {
     });
 };
 
-const findCards = (res) => {
+const findCards = (res, req) => {
   Card.find({})
     .then((cards) => {
       res.send(cards);
@@ -26,7 +26,7 @@ const findCards = (res) => {
 const deleteCard = (req, res) => {
   Card.findById(req.params.cardId)
     .orFail(() => {
-      throw new notFoundError('Запрашиваемые данные по указанному id не найдены');
+      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
     })
     .then((cardForDeleting) => {
       res.send(cardForDeleting);
@@ -43,7 +43,7 @@ const likeCard = (req, res) => {
     { new: true },
   )
     .orFail(() => {
-      throw new notFoundError('Запрашиваемые данные по указанному id не найдены');
+      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
     })
     .then((card) => {
       res.send(card);
@@ -60,7 +60,7 @@ const dislikeCard = (req, res) => {
     { new: true },
   )
     .orFail(() => {
-      throw new notFoundError('Запрашиваемые данные по указанному id не найдены');
+      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
     })
     .then((card) => {
       res.send(card);
