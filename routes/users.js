@@ -10,11 +10,11 @@ const {
   updateUserAvatar,
 } = require('../controllers/users');
 
-router.get('/', createUser);
-router.post('/', createUser);
-router.get('/me', getUsers);
-router.get('/:userId', findUserById);
-router.patch('/me', updateUserInfo);
-router.patch('/me/avatar', updateUserAvatar);
+router.get('/users', createUser);
+router.post('/users', createUser);
+router.get('/users/me', getUsers);
+router.get('/users/:userId', findUserById);
+router.patch('/users/me', updateUserInfo);
+router.patch('/users/me/avatar', updateUserAvatar);
 
 module.exports = router;
