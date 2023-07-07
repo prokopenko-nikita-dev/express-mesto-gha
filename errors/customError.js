@@ -8,5 +8,5 @@ module.exports.customError = (err, next) => {
   if (err.name === 'DocumentNotFoundError') {
     return next(new NotFoundError('Запрашиваемые данные по указанному id не найдены'));
   }
-  return;
+  return next(err);
 };
