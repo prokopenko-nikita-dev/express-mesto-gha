@@ -12,11 +12,10 @@ app.use(bodyParser.json());
 app.use('/users', users);
 app.use('/cards', cards);
 
-app.use((req, next) => {
+app.use((req) => {
   req.user = {
     _id: '64a3065b2a3e6673e24b4cb3',
   };
-  next();
 });
 
 app.listen(3000, () => {
