@@ -3,8 +3,8 @@ const NotFoundError = require('../errors/notFoundError');
 const { customError } = require('../errors/customError');
 
 const createUser = (req, res) => {
-  const { name, about, email } = req.body;
-  User.create({ name, about, email })
+  const { name, about, avatar } = req.body;
+  User.create({ name, about, avatar })
     .then((user) => {
       res.send(user);
     })
