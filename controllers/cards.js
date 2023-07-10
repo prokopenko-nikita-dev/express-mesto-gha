@@ -2,14 +2,14 @@ const Card = require('../models/card');
 const NotFoundError = require('../errors/notFoundError');
 const { customError } = require('../errors/customError');
 
-const createCard = (req, res) => {
+const createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
     .then((card) => {
       res.status(201).send(card);
     })
     .catch((err) => {
-      customError(err, req, res);
+      customError(err, req, res, next);
     });
 };
 

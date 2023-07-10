@@ -1,16 +1,36 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { HASH_LENGTH, SECRET_KEY } = require('../environment/env');
 const User = require('../models/user');
 const NotFoundError = require('../errors/notFoundError');
 const { customError } = require('../errors/customError');
 
-const createUser = (req, res) => {
-  const { name, about, avatar } = req.body;
-  User.create({ name, about, avatar })
+const createUser = (req, res, next) => {
+  const { name, about, avatar, email, password } = req.body;
+  bcrypt.hash(password, HASH_LENGTH).then((hash) => User.create({ name, about, avatar, email, password: hash }))
+    .then((user) =>
+      User.findOne({ _id: user._id }))
     .then((user) => {
       res.status(201).send(user);
     })
     .catch((err) => {
-      customError(err, req, res);
+      customError(err, req, res, next);
     });
+};
+
+const login = (req, res, next) => {
+  const { email, password } = req.body;
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id }, SECRET_KEY, { expiresIn: '7d' });
+      res
+        .cookie('jwt', token, { // А как еще можно работать с куками? Теория описывает только как это сделать в теле ответа
+          maxAge: 3600000 * 24 * 7, //на сколько дали доступ
+          httpOnly: true, // выключили доступ к куке из ЖС
+          sameSite: true, // принимает/отправляет куки только с того же домена
+        }).send({ token });
+    })
+    .catch((err) => next(err));
 };
 
 const getUsers = (req, res) => {
@@ -36,6 +56,19 @@ const findUserById = (req, res) => {
     })
     .catch((err) => {
       customError(err, req, res);
+    });
+};
+
+const getUserInfo = (req, res, next) => {
+  User.findById(req.user._id)
+    .orFail(() => {
+      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
+    })
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      customError(err, req, res, next);
     });
 };
 
@@ -83,8 +116,10 @@ const updateUserAvatar = (req, res) => {
 
 module.exports = {
   createUser,
+  login,
   getUsers,
   findUserById,
+  getUserInfo,
   updateUserInfo,
   updateUserAvatar,
 };
