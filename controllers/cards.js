@@ -13,7 +13,7 @@ const createCard = (req, res, next) => {
     });
 };
 
-const findCards = (res, req) => {
+const findCards = (req, res) => {
   Card.find({})
     .then((cards) => {
       res.send(cards);
@@ -23,7 +23,7 @@ const findCards = (res, req) => {
     });
 };
 
-const deleteCard = (req, res) => {
+const deleteCard = (req, res, next) => {
   Card.findById(req.params.cardId)
     .orFail(() => {
       throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
@@ -32,11 +32,11 @@ const deleteCard = (req, res) => {
       res.send(cardForDeleting);
     })
     .catch((err) => {
-      customError(err, req, res);
+      customError(err, req, res, next);
     });
 };
 
-const likeCard = (req, res) => {
+const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
@@ -49,11 +49,11 @@ const likeCard = (req, res) => {
       res.send(card);
     })
     .catch((err) => {
-      customError(err, req, res);
+      customError(err, req, res, next);
     });
 };
 
-const dislikeCard = (req, res) => {
+const dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
@@ -66,7 +66,7 @@ const dislikeCard = (req, res) => {
       res.send(card);
     })
     .catch((err) => {
-      customError(err, req, res);
+      customError(err, req, res, next);
     });
 };
 

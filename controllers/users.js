@@ -6,10 +6,26 @@ const NotFoundError = require('../errors/notFoundError');
 const { customError } = require('../errors/customError');
 
 const createUser = (req, res, next) => {
-  const { name, about, avatar, email, password } = req.body;
-  bcrypt.hash(password, HASH_LENGTH).then((hash) => User.create({ name, about, avatar, email, password: hash }))
-    .then((user) =>
-      User.findOne({ _id: user._id }))
+  const {
+    name,
+    about,
+    avatar,
+    email,
+    password,
+  } = req.body;
+
+  bcrypt
+    .hash(password, HASH_LENGTH)
+    .then((hash) => User.create({
+      name,
+      about,
+      avatar,
+      email,
+      password: hash,
+    }))
+    .then((user) => User.findOne({
+      _id: user._id,
+    }))
     .then((user) => {
       res.status(201).send(user);
     })
@@ -20,15 +36,16 @@ const createUser = (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
+
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, SECRET_KEY, { expiresIn: '7d' });
-      res
-        .cookie('jwt', token, { // А как еще можно работать с куками? Теория описывает только как это сделать в теле ответа
-          maxAge: 3600000 * 24 * 7, //на сколько дали доступ
-          httpOnly: true, // выключили доступ к куке из ЖС
-          sameSite: true, // принимает/отправляет куки только с того же домена
-        }).send({ token });
+      res.cookie('jwt', token, {
+        maxAge: 3600000 * 24 * 7,
+        httpOnly: true,
+        sameSite: 'strict',
+      });
+      res.send({ token });
     })
     .catch((err) => next(err));
 };
