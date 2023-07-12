@@ -11,6 +11,7 @@ const auth = require('./middlewares/auth');
 const users = require('./routes/users');
 const cards = require('./routes/cards');
 const NotFoundError = require('./errors/notFoundError');
+const errorHandler = require('./middlewares/error-handler');
 
 const { PORT = 3000, BASE_PATH } = process.env;
 
@@ -39,13 +40,7 @@ app.use('/*', () => {
 });
 
 app.use(errors());
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res
-    .status(statusCode)
-    .send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
-  next();
-});
+app.use(errorHandler);
 
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/mestodb', {

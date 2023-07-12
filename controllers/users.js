@@ -4,6 +4,7 @@ const { HASH_LENGTH, SECRET_KEY } = require('../environment/env');
 const User = require('../models/user');
 const NotFoundError = require('../errors/notFoundError');
 const { customError } = require('../errors/customError');
+const { CREATED } = require('../errors/errorStatuses');
 
 const createUser = (req, res, next) => {
   const {
@@ -27,7 +28,7 @@ const createUser = (req, res, next) => {
       _id: user._id,
     }))
     .then((user) => {
-      res.status(201).send(user);
+      res.status(CREATED).send(user);
     })
     .catch((err) => {
       customError(err, req, res, next);
